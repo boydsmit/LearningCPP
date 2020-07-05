@@ -2,34 +2,29 @@
 
 using namespace std;
 
-class questionnaire {
+class Questionnaire {
 public:
-    static bool isYes(char answer);
     static void age();
 };
 
 int main() {
-    questionnaire::age();
+    Questionnaire::age();
     return 0;
 }
 
-bool questionnaire::isYes(char answer) {
-    return answer == 'y';
-}
-
-void questionnaire::age() {
+void Questionnaire::age() {
     int age;
     char answer;
 
-    cout << "what is your age? \n";
+    cout << "what is your age?" << endl;
     cin >> age;
-    cout << "You said you were " << age << " years old is that correct? (y/n) \n";
+    cout << "You said you were " << age << " years old is that correct? (y/n)" << endl;
     cin >> answer;
 
-    if(questionnaire::isYes(answer)){
+    if(answer == 'y'){
         cout << "Thank you for telling me you are " << age << " years old";
     } else {
-        cout << "Then what is your age \n";
+        cout << "Then what is your age" << endl;
         cin >> age;
     }
 
