@@ -1,4 +1,9 @@
 # Prerequisites
+
+Debug/**
+*.vxproj.*
+*.vxproj
+*.sln
 *.d
 
 # Compiled Object files
