@@ -1,8 +1,9 @@
 # Prerequisites
 
-Debug/**
-*.vxproj.*
-*.vxproj
+**/.vs/**
+**/Debug/*
+*.vcxproj.*
+*.vcxproj
 *.sln
 *.d
 
