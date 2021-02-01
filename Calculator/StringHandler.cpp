@@ -3,12 +3,26 @@
 #include <vector>
 
 //Parses to given string to an int and splits the integers in seperate arrays
-int* parseStringToInt(std::string equation, char op) {
+int* parseStringToInt(std::string equation, std::vector<size_t> ops, int index, int curAns) {
 	static int subStrArray[2];
+	int endLoc;
+	if (ops.size() < index) {
+		endLoc = ops[index + 1] - 1;
+	}
+	else {
+		endLoc = std::string::npos;
+	}
 
-	try {
-		subStrArray[0] = std::stoi(equation.substr(0, equation.find(op)));
-		subStrArray[1] = std::stoi(equation.substr(equation.find(op) + 1, std::string::npos));
+	try { 
+		if (curAns != 0 )
+		{
+			subStrArray[0] = curAns;
+			subStrArray[1] = std::stoi(equation.substr(ops[index] + 1, endLoc));
+		}
+		else {
+			subStrArray[0] = std::stoi(equation.substr(0, ops[index]));
+			subStrArray[1] = std::stoi(equation.substr(ops[index] + 1, endLoc));
+		}
 		return subStrArray;
 	}
 	catch (std::exception& err) {
