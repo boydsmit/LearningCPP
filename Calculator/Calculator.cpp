@@ -1,47 +1,62 @@
 #include "StringHandler.hpp"
+#include <string>
 
 int main()
 {
+	std::vector<size_t> operators;
+	int* intArray;
+	int answer = 0;
+
 	std::string equation;
 	std::cout << "Please Enter a sum:\n";
 	std::cin >> equation;
-	 
+
 	//Checks if equation only contains valid characters
 	if (equation.find_first_not_of("123456789+-*/()") != std::string::npos) {
 		std::cout << "Equation contained an illegal character. Please make sure to only use: Digits, operators and brackets.";
 		return 0;
 	}
+	
+	//Performs the multiplications and divides inside the equation and injects the answers insdide the string
+	while(equation.find_first_of("*/") != std::string::npos) {
+		//Gets the current remaining operators inside the equation
+		operators = GetOperatorLocations(equation);
+		for (size_t i = 0; i < operators.size(); i++)
+		{
+			switch (equation[operators[i]]) {
+			case '*':
+				intArray = parseStringToInt(equation, operators, i);
+				equation = replaceStringWithAnswer(equation, intArray, '*', intArray[0] * intArray[1]);
+				break;
+			case '/':
+				intArray = parseStringToInt(equation, operators, i);
+				equation = replaceStringWithAnswer(equation, intArray, '/', intArray[0] / intArray[1]);
+				break;
+			}
+		}
+	}
 
-	//Gets the locations of all the operators from the equation
-	std::vector<size_t> operators = GetOperatorLocations(equation);
+	operators = GetOperatorLocations(equation);
 
-	int* subStringArr;
-	int answer = 0;
-
-	//Performs the equation
+	//Performs the final plus and minus that remains inside the equation
 	for (int i = 0; i < operators.size(); i++) {
 		switch (equation[operators[i]])
 		{
 		case '+':
-			subStringArr = parseStringToInt(equation, operators, i, answer);
-			answer = subStringArr[0] + subStringArr[1];
+			intArray = parseStringToInt(equation, operators, i, answer);
+			answer = intArray[0] + intArray[1];
 			break;
 		case '-':
-			subStringArr = parseStringToInt(equation, operators, i, answer);
-			answer = subStringArr[0] - subStringArr[1];
+			intArray = parseStringToInt(equation, operators, i, answer);
+			answer = intArray[0] - intArray[1];
 			break;
-		case '*':
-			subStringArr = parseStringToInt(equation, operators, i, answer);
-			answer = subStringArr[0] * subStringArr[1];
-			break;
-		case '/':
-			subStringArr = parseStringToInt(equation, operators, i, answer);
-			answer = subStringArr[0] / subStringArr[1];
-			break;
-		default:
-			std::cout << "Sum did not contain a valid operator.";
-			return 0;
 		}
+	}
+
+	//If no answer was generated from from the equation the answer already resides in the equation
+	if (answer == 0)
+	{
+		answer = std::stoi(equation);
 	}
 	std::cout << "The answer is : " << answer;
 }
