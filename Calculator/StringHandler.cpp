@@ -2,7 +2,14 @@
 #include <string>
 #include <vector>
 
-//Parses to given string to an int and splits the integers in seperate arrays
+/// <summary>
+/// Parses to given string to an int and splits the integers in seperate arrays.
+/// </summary>
+/// <param name="equation">Holds the string of the equation</param>
+/// <param name="ops">Holds the locations of all the operators</param>
+/// <param name="index">Holds the index of the current iteration</param>
+/// <param name="curAns">Holds the previous given answer</param>
+/// <returns>Returns a pointer to an integer array</returns>
 int* parseStringToInt(std::string equation, std::vector<size_t> ops, int index, int curAns) {
 	static int subStrArray[2];
 	int startLoc = 0;
@@ -38,7 +45,11 @@ int* parseStringToInt(std::string equation, std::vector<size_t> ops, int index, 
 	}
 }
 
-//Finds all operators that are used in the equation
+/// <summary>
+/// Finds all operators that are used in the equation.
+/// </summary>
+/// <param name="equation">Holds the string of the equation</param>
+/// <returns>Returns a vector of the found operators</returns>
 std::vector<size_t> GetOperatorLocations(std::string equation) {
 	std::vector<size_t> positions;
 	
@@ -62,7 +73,14 @@ std::vector<size_t> GetOperatorLocations(std::string equation) {
 	return positions;
 }
 
-//Replaces a part of the equation with the given answer of the specific part
+/// <summary>
+/// Replaces a part of the equation with the given answer of the specific part.
+/// </summary>
+/// <param name="string">Holds the string that needs to be replaced</param>
+/// <param name="intArray">Holds the integers of the string the old string that needs to be replaced</param>
+/// <param name="op">Holds the current used operator of the equation</param>
+/// <param name="replacer">Holds the answer the string needs to be replaced with</param>
+/// <returns>Returns a string that holds the new equation</returns>
 std::string replaceStringWithAnswer(std::string string, int* intArray, char op, int replacer) {
 	std::string subString = std::to_string(intArray[0]) + op + std::to_string(intArray[1]);
 	size_t index = string.find(subString);
